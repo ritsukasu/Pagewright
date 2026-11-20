@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="A free PDF editor and converter that runs entirely in your browser. No uploads."
+    />
+    <meta name="theme-color" content="#3a2cf0" />
+    <title>Pagewright</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2064%2064%27%3E%3Crect%20width=%2764%27%20height=%2764%27%20rx=%2715%27%20fill=%27%233a2cf0%27/%3E%3Cpath%20d=%27M19%2012h18l10%2010v28a3%203%200%200%201-3%203H19a3%203%200%200%201-3-3V15a3%203%200%200%201%203-3z%27%20fill=%27%23fff%27/%3E%3Cpath%20d=%27M37%2012v10h10z%27%20fill=%27%23b9b3ff%27/%3E%3Cpath%20d=%27M23%2031h18M23%2038h18M23%2045h11%27%20stroke=%27%233a2cf0%27%20stroke-width=%273%27%20stroke-linecap=%27round%27%20fill=%27none%27/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Caveat:wght@500&display=swap"
+    />
+    <link rel="stylesheet" href="style.css?v=20261121b" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="wrap">
+        <button
+          class="btn-ghost icon-only"
+          id="burger"
+          aria-label="All tools"
+          aria-controls="drawer"
+          aria-expanded="false"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </button>
+        <a class="brand" href="#"
+          ><svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+            <rect width="64" height="64" rx="15" fill="#3a2cf0" />
+            <path
+              d="M19 12h18l10 10v28a3 3 0 0 1-3 3H19a3 3 0 0 1-3-3V15a3 3 0 0 1 3-3z"
+              fill="#fff"
+            />
+            <path d="M37 12v10h10z" fill="#b9b3ff" />
+            <path
+              d="M23 31h18M23 38h18M23 45h11"
+              stroke="#3a2cf0"
+              stroke-width="3"
+              stroke-linecap="round"
+              fill="none"
+            />
+          </svg>
+          Pagewright</a
+        >
+        <a class="nav-link" href="#edit-pdf">Edit PDF</a>
+        <button class="btn-ghost" id="megaBtn" aria-expanded="false" aria-controls="mega">
+          All tools ▾
+        </button>
+        <div class="top-end">
+          <button
+            class="btn-ghost icon-only"
+            id="langBtn"
+            aria-label="Language"
+            aria-haspopup="true"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" />
+              <path
+                d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"
+              />
+            </svg>
+          </button>
+          <button class="btn-ghost icon-only" id="themeBtn" aria-label="Switch theme">
+            <svg class="sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+              />
+            </svg>
+            <svg class="moon" viewBox="0 0 24 24" aria-hidden="true" hidden>
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="mega" id="mega" hidden>
+        <div class="mega-card"><div class="cols" id="megaCols"></div></div>
+      </div>
+    </header>
+
+    <div class="drawer" id="drawer" hidden>
+      <div class="scrim" id="drawerScrim"></div>
+      <nav class="drawer-panel" aria-label="All tools">
+        <div class="drawer-head">
+          <span class="drawer-title">All tools</span>
+          <button class="btn-ghost icon-only" id="drawerClose" aria-label="Close">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+          </button>
+        </div>
+        <div class="drawer-cols" id="drawerCols"></div>
+      </nav>
+    </div>
+
+    <main id="home" class="wrap" data-view>
+      <section class="hero">
+        <h1>Edit, convert and finish any PDF.</h1>
+        <p>
+          Add text, images, shapes and highlights. Fill forms, sign, redact, reorder pages, and
+          convert to and from Word, Excel, PowerPoint, JPG and more. Everything runs inside this
+          tab, so your files are never uploaded.
+        </p>
+        <div class="drop" id="homeDrop">
+          <div>
+            <b>Drop a PDF here</b>
+            <div class="muted">or pick a file to open it in the editor</div>
+          </div>
+          <div class="row">
+            <label class="btn" for="homeFile">Select PDF file</label
+            ><input type="file" id="homeFile" accept="application/pdf,.pdf" hidden />
+          </div>
+        </div>
+        <div class="stats" id="stats"></div>
+      </section>
+      <section class="sec">
+        <h2>What it does</h2>
+        <div class="tabs" role="tablist" id="homeTabs"></div>
+        <div class="tabpanel" id="homePanel"></div>
+      </section>
+      <section class="sec">
+        <h2>All tools</h2>
+        <div id="allTools"></div>
+      </section>
+      <footer class="foot">
+        <div>
+          <h5>Private by design</h5>
+          Files are read and written in your browser. Nothing is sent to a server.
+        </div>
+        <div>
+          <h5>Fonts</h5>
+          Added text uses the standard PDF fonts: Helvetica, Times and Courier. Characters outside
+          Latin-1 may not render.
+        </div>
+        <div>
+          <h5>Not included</h5>
+          Password protect and unlock, OCR, compare, and AI summarize or translate need server-side
+          processing and are not part of this version.
+        </div>
+      </footer>
+    </main>
+
+    <main id="toolView" class="wrap" data-view hidden>
+      <div class="tool" id="toolBody"></div>
+    </main>
+
+    <main id="editorView" data-view hidden>
+      <div class="ed-empty" id="edEmpty">
+        <a class="crumb" href="#">← All tools</a>
+        <h1 style="margin-top: 14px">Edit PDF</h1>
+        <p class="muted" style="font-size: 17px; max-width: 56ch; margin: 0 0 28px">
+          Add text, shapes, comments and highlights. Edit existing text, fill forms, sign and
+          redact. Reorder, rotate and delete pages.
+        </p>
+        <div class="drop" id="edDrop">
+          <div>
+            <b>Drop a PDF here</b>
+            <div class="muted">or pick a file from your device</div>
+          </div>
+          <div class="row">
+            <label class="btn" for="edFile">Select PDF file</label
+            ><input type="file" id="edFile" accept="application/pdf,.pdf" hidden />
+          </div>
+        </div>
+      </div>
+      <div class="ed" id="edApp" hidden>
+        <div class="ed-bar" id="edBar"></div>
+        <div class="ed-main">
+          <aside class="ed-left" id="thumbs" aria-label="Pages"></aside>
+          <div class="stage" id="stage" data-tool="select"></div>
+          <aside class="ed-right" id="side" aria-label="Properties"></aside>
+        </div>
+      </div>
+    </main>
+    <footer class="site-foot" id="siteFoot">
+      <div class="wrap foot-grid">
+        <div class="foot-brand">
+          <a class="brand" href="#"
+            ><svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+              <rect width="64" height="64" rx="15" fill="#3a2cf0" />
+              <path
+                d="M19 12h18l10 10v28a3 3 0 0 1-3 3H19a3 3 0 0 1-3-3V15a3 3 0 0 1 3-3z"
+                fill="#fff"
+              />
+              <path d="M37 12v10h10z" fill="#b9b3ff" />
+              <path
+                d="M23 31h18M23 38h18M23 45h11"
+                stroke="#3a2cf0"
+                stroke-width="3"
+                stroke-linecap="round"
+                fill="none"
+              />
+            </svg>
+            Pagewright</a
+          >
+          <p>Edit, convert and organize PDF files. Everything happens in your browser.</p>
+        </div>
+        <div class="foot-cols" id="footCols"></div>
+      </div>
+      <div class="wrap foot-base">
+        <button class="foot-lang" id="footLang" aria-haspopup="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path
+              d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"
+            />
+          </svg>
+          <span id="footLangName">English</span>
+          <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+        </button>
+        <span class="foot-note">Files never leave your device.</span>
+        <span class="foot-copy">© 2026 Pagewright · Your PDF editor</span>
+      </div>
+    </footer>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+    <div id="modalRoot"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="lang.js?v=20261121b"></script>
+    <script src="script.js?v=20261121b"></script>
+  </body>
+</html>
